@@ -21,6 +21,7 @@ namespace EPocalipse.Json.Viewer
         private PluginsManager _pluginsManager = new PluginsManager();
         bool _updating;
         Control _lastVisualizerControl;
+        private bool ignoreSelChange;
 
         public JsonViewer()
         {
@@ -130,8 +131,16 @@ namespace EPocalipse.Json.Viewer
 
         private void MarkError(ErrorDetails _errorDetails)
         {
-            txtJson.Select(Math.Max(0, _errorDetails.Position - 1), 10);
-            txtJson.ScrollToCaret();
+            ignoreSelChange = true;
+            try
+            {
+                txtJson.Select(Math.Max(0, _errorDetails.Position - 1), 10);
+                txtJson.ScrollToCaret();
+            }
+            finally
+            {
+                ignoreSelChange = false;
+            }
         }
 
         private void VisualizeJsonTree(JsonObjectTree tree)
@@ -204,6 +213,7 @@ namespace EPocalipse.Json.Viewer
         private void txtJson_TextChanged(object sender, EventArgs e)
         {
             Json = txtJson.Text;
+            btnViewSelected.Checked = false;
         }
 
         private void txtFind_TextChanged(object sender, EventArgs e)
@@ -632,6 +642,24 @@ namespace EPocalipse.Json.Viewer
                 text = text.Replace(ch.ToString(), "");
             }
             txtJson.Text = text;
+        }
+
+        private void btnViewSelected_Click(object sender, EventArgs e)
+        {
+            if (btnViewSelected.Checked)
+                _json = txtJson.SelectedText.Trim();
+            else
+                _json = txtJson.Text.Trim();
+            Redraw();
+        }
+
+        private void txtJson_SelectionChanged(object sender, EventArgs e)
+        {
+            if (btnViewSelected.Checked && !ignoreSelChange)
+            {
+                _json = txtJson.SelectedText.Trim();
+                Redraw();
+            }
         }
     }
 

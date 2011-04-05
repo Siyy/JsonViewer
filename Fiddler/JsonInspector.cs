@@ -9,11 +9,11 @@ using System.Drawing;
 
 namespace EPocalipse.Json.Fiddler
 {
-    public class JsonInspector : Inspector2, IResponseInspector2
+    public class JsonInspector : Inspector2
     {
         private byte[] _body;
         JsonViewer viewer;
-        HTTPResponseHeaders _headers;
+        protected HTTPHeaders _headers;
 
         public override void AddToTab(TabPage tabPage)
         {
@@ -77,7 +77,7 @@ namespace EPocalipse.Json.Fiddler
             set
             {
                 _body = value;
-                string json=Encoding.UTF8.GetString(_body);
+                string json = Encoding.UTF8.GetString(_body);
                 bool encoded = _headers.Exists("Transfer-Encoding") || _headers.Exists("Content-Encoding");
                 if (_headers.ExistsAndEquals("Transfer-Encoding", "chunked"))
                 {
@@ -100,6 +100,14 @@ namespace EPocalipse.Json.Fiddler
             }
         }
 
+        public override void SetFontSize(float flSizeInPoints)
+        {
+            viewer.Font = new Font(viewer.Font.FontFamily, flSizeInPoints, FontStyle.Regular, GraphicsUnit.Point);
+        }
+    }
+
+    public class JsonResponseInspector : JsonInspector, IResponseInspector2
+    {
         public HTTPResponseHeaders headers
         {
             get
@@ -111,10 +119,20 @@ namespace EPocalipse.Json.Fiddler
                 _headers = value;
             }
         }
+    }
 
-        public override void SetFontSize(float flSizeInPoints)
+    public class JsonRequestInspector : JsonInspector, IRequestInspector2
+    {
+        public HTTPRequestHeaders headers
         {
-            viewer.Font = new Font(viewer.Font.FontFamily, flSizeInPoints, FontStyle.Regular, GraphicsUnit.Point);
+            get
+            {
+                return null;
+            }
+            set
+            {
+                _headers = value;
+            }
         }
     }
 }

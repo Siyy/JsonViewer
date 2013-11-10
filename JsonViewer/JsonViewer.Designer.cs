@@ -37,6 +37,7 @@ namespace EPocalipse.Json.Viewer
             this.mnuExpandAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCopyName = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCopyValue = new System.Windows.Forms.ToolStripMenuItem();
             this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.pnlFind = new System.Windows.Forms.Panel();
@@ -124,6 +125,7 @@ namespace EPocalipse.Json.Viewer
             this.mnuExpandAll,
             this.toolStripMenuItem1,
             this.mnuCopy,
+            this.mnuCopyName,
             this.mnuCopyValue});
             this.mnuTree.Name = "mnuTree";
             this.mnuTree.Size = new System.Drawing.Size(135, 98);
@@ -154,6 +156,13 @@ namespace EPocalipse.Json.Viewer
             this.mnuCopy.Size = new System.Drawing.Size(134, 22);
             this.mnuCopy.Text = "&Copy";
             this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
+            // 
+            // mnuCopyName
+            // 
+            this.mnuCopyName.Name = "mnuCopyName";
+            this.mnuCopyName.Size = new System.Drawing.Size(152, 22);
+            this.mnuCopyName.Text = "Copy Name";
+            this.mnuCopyName.Click += new System.EventHandler(this.mnuCopyName_Click);
             // 
             // mnuCopyValue
             // 
@@ -508,6 +517,7 @@ namespace EPocalipse.Json.Viewer
         private System.Windows.Forms.RichTextBox txtJson;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.Windows.Forms.ToolStripMenuItem mnuCopyName;
 
     }
 }

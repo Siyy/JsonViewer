@@ -167,6 +167,7 @@ namespace EPocalipse.Json.Viewer
             }
         }
 
+        [Browsable(false)]
         public ErrorDetails ErrorDetails
         {
             get
@@ -202,6 +203,7 @@ namespace EPocalipse.Json.Viewer
             lblError.Text = String.Empty;
         }
 
+        [Browsable(false)]
         public bool HasErrors
         {
             get
@@ -604,12 +606,33 @@ namespace EPocalipse.Json.Viewer
             }
         }
 
+        private void mnuCopyName_Click(object sender, EventArgs e)
+        {
+            JsonViewerTreeNode node = GetSelectedTreeNode();
+
+            if (node != null && node.JsonObject.Id != null)
+            {
+                JsonObject obj = node.Tag as JsonObject;
+                Clipboard.SetText(obj.Id);
+            }
+            else
+            {
+                Clipboard.SetText("");
+            }
+
+        }
+
         private void mnuCopyValue_Click(object sender, EventArgs e)
         {
             JsonViewerTreeNode node = GetSelectedTreeNode();
-            if (node != null && node.JsonObject.Value != null)
+            if (node != null && node.Tag != null)
             {
-                Clipboard.SetText(node.JsonObject.Value.ToString());
+                JsonObject obj = node.Tag as JsonObject;
+                Clipboard.SetText(obj.Value.ToString());
+            }
+            else
+            {
+                Clipboard.SetText("null");
             }
         }
 

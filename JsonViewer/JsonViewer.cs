@@ -684,9 +684,21 @@ namespace EPocalipse.Json.Viewer
                 Redraw();
             }
         }
-    }
 
-    public struct ErrorDetails
+		private string ToCSharpString(string text)
+		{
+			return text.Replace("\"", "\"\"");
+		}
+
+		private void CSharpToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string text = txtJson.Text;
+			text = ToCSharpString(text);
+            txtJson.Text = text;
+		}
+	}
+
+	public struct ErrorDetails
     {
         internal string _err;
         internal int _pos;
